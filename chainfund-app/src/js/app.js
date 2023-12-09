@@ -33,9 +33,7 @@ var App = {
       }
      
         try {
-            // Additional check to see if the contract is properly initialized
             if (App.contracts.ChainFundMultiToken && App.currentAccount) {
-                // Existing logic to handle account change
                 App.handleAccountChange();
             }
         } catch (error) {
@@ -50,12 +48,9 @@ var App = {
       App.contracts.batch = new App.web3.eth.Contract(App.abibatch, App.batchaddress, {});
       testContractConnection =  async function() {
         try {
-            // Attempting to call a simple contract method
             const supply = await App.contracts.ChainFundMultiToken.methods.totalCFTSupply().call();
             console.log(`Total CFT Supply: ${supply}`);
             toastr.info(`Contract connected. Total CFT Supply: ${supply}`);
-    
-            // Optionally, check the contract owner or another simple attribute
             const contractOwner = await App.contracts.ChainFundMultiToken.methods.owner().call();
             console.log(`Contract Owner: ${contractOwner}`);
         } catch (error) {
@@ -86,7 +81,6 @@ var App = {
   },
 
   bindEvents: function() {
-      // Bind all event handlers here
       $('#connect-metamask').on(App.connectMetaMask);
       $('#register-user').click(App.registerInvestor);
       $('#buy-cft').click(App.buyCFTTokens);
@@ -137,9 +131,6 @@ var App = {
     }
 },
 executeProposal: async function() {
-  // Input validation
-
-
   try {
       await App.contracts.ChainFundMultiToken.methods.executeProposal().send({ from: App.currentAccount });
       toastr.success("Proposal executed successfully.");
@@ -309,29 +300,15 @@ getWinningProposal: async function() {
           });
   },
 
-  // checkCFTBalance: async function() {
-  //     const recipient = $('#balance-check-address').val();
-  //     await App.contracts.ChainFundMultiToken.methods.CFTbalance(recipient).call()
-  //         .then(function(balance) {
-  //             $('#current-user-cft-balance').text(`CFT Balance: ${balance}`).show();
-  //             toastr.info(`CFT Balance: ${balance}`);
-  //         })
-  //         .catch(function(err) {
-  //             console.error("Check balance failed:", err);
-  //             toastr.error("Checking CFT balance failed.");
-  //         });
-  // },
   checkCFTBalance: async function() {
     const recipient = $('#balance-check-address').val().trim();
 
-    // Input validation: Check if the recipient address is valid
     if (!App.web3.utils.isAddress(recipient)) {
         toastr.error("Invalid address");
         console.error("Invalid address");
         return;
     }
 
-    // Call the CFTbalance method from your contract
     await App.contracts.ChainFundMultiToken.methods.CFTbalance(recipient).call()
         .then(function(balance) {
             $('#current-user-cft-balance').text(`CFT Balance: ${balance}`).show();
