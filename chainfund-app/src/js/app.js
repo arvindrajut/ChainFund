@@ -1,8 +1,8 @@
 var App = {
   web3: null,
   contracts: {},
-  chainFundERC1155Address: "0xA47d2472a7C686D49f273902D9b1404adeB22755",
-  batchaddress:"0xAADf74C8917E40F7dB872365d59f03F88b2e7388",
+  chainFundERC1155Address: "0x21a5A4819e2D6C3052b5606C12A03794C880a2Dc",
+  batchaddress:"0x3Ffae30038a2c8161803AaB7397D6fe8C92614Ca",
   currentAccount: null,
 
   init: async function() {
